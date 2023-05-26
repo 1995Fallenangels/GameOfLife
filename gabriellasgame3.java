@@ -40,38 +40,14 @@ public class gabriellasgame3
                 for (int y=0;y<gridSize;y++)//this checks every row
                 {
                     int count = 0;
-                    if (x>0 && y>0 && board[y-1][x-1]==1)
-                    {
-                        count++;
-                    }
-                    if (x>0 && y>0 && board[y-1][x]==1)
-                    {
-                        count++;
-                    }
-                    if (x<gridSize && y>0 && board[y-1][x+1]==1)
-                    {
-                        count++;
-                    }
-                    if (x>0 && board[y][x-1]==1)
-                    {
-                        count++;
-                    }
-                    if (x<gridSize && board[y][x+1]==1)
-                    {
-                        count++;
-                    }
-                    if (x>0 && y<gridSize && board[y+1][x-1]==1)
-                    {
-                        count++;
-                    }
-                    if ( y<gridSize && board[y+1][x]==1)
-                    {
-                        count++;
-                    }
-                    if (x<gridSize && y<gridSize && board[y+1][x+1]==1)
-                    {
-                        count++;
-                    }
+                    if (x>0 && y>0 && board[y-1][x-1]==1) count++;
+                    if (x>0 && y>0 && board[y-1][x]==1) count++;
+                    if (x<gridSize && y>0 && board[y-1][x+1]==1) count++;
+                    if (x>0 && board[y][x-1]==1) count++;
+                    if (x<gridSize && board[y][x+1]==1) count++;
+                    if (x>0 && y<gridSize && board[y+1][x-1]==1)count++;
+                    if ( y<gridSize && board[y+1][x]==1) count++;
+                    if (x<gridSize && y<gridSize && board[y+1][x+1]==1) count++;
                     if(count < 2 && board[y][x]==1){
                         board[y][x] = 0;
                     }
