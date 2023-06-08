@@ -2,7 +2,7 @@
  * Write a description of class gabriellasgame3 here.
  *
  * @author Gabriella
- * @version 8/06/2023
+ * @version 9/06/2023
  * This game is Gabriella's Game of Life (based on the game Conway's Game of Life)
  * This game is played on a 2D grid, where every square is a cell. It can either be dead or alive, depending on the cells surrounding it. The goal of the game is to make pa
  */
@@ -38,24 +38,24 @@ public class gabriellasGame5
                 printGrid();//This prints out a new grid with the user input chaning the cells.
             }
             System.out.println("How many generations do you want to run?");
-            runningGenerations=kb.nextInt();
+            runningGenerations=kb.nextInt();//this asks the user how many generations they want to run
             while (runningGenerations >= 0)
             {
-                ruleOne();
-                
+                allRules();
                 printGrid();
-                    try {
-        Thread.sleep(secondsToSleep * 1000);
-    } catch (InterruptedException ie) {
-        Thread.currentThread().interrupt();
-    }
+                try {
+                Thread.sleep(secondsToSleep * 1000);
+                } catch (InterruptedException ie) {
+                Thread.currentThread().interrupt();
+                }
                 runningGenerations--;
             }
         }
-    //the methods below are of the rules of my game
-        public void ruleOne()//This method applies one of the GameofLife rules (rule: any live cell with less than two live neighbours dies by underpopulation.)
+    //below are methods, I have put components of my game into methods to make it easier for me to call them, to make my code more organized, and to prevent errors.
+    //This method applies the rules of Conways Game of life, it scans the 8 cells around each cell and turns it on and off depending 
+        public void allRules()
         {
-            for (int x=0;x<gridSize-1;x++)//this checks every colomn
+               for (int x=0;x<gridSize-1;x++)//this checks every colomn
             {
                 for (int y=0;y<gridSize-1;y++)//this checks every row
                 {
@@ -141,7 +141,7 @@ public class gabriellasGame5
                     userPicky=kb.nextInt();//the user input, user types answer on keyboard
                     kb.nextLine();
                 }
-            catch (NumberFormatException e)
+            catch (NumberFormatException e)//this handles all the errors, user may make a mistake by putting things other than numbers
                 {
                     System.out.println("Sorry! there's an error, please enter numbers only.");
                     return;
