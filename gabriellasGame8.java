@@ -2,7 +2,7 @@
  * Write a description of class gabriellasgame7 here.
  *
  * @author Gabriella Bitju
- * @version 26/06/2023
+ * @version 30/06/2023
  * This game is Gabriella's Game of Life (based on the game Conway's Game of Life)
  * This game is played on a 2D grid, where every square is a cell. It can either be dead or alive, depending on the cells surrounding it. The goal of the game is to make pa
  */
@@ -32,7 +32,6 @@ public class gabriellasGame8
             newBoard = board;
             System.out.println("Welcome to Gabriella's Game of Life.");
             gameOption();
-            startGame();
         }
     //below are methods, I have put components of my game into methods to make it easier for me to call them, to make my code more organized, and to prevent errors.
     //This method applies the rules of Conways Game of life, it scans the 8 cells around each cell and turns it on and off based on the previoue 
@@ -51,7 +50,7 @@ public class gabriellasGame8
                     System.out.println("Each cell with one or no neighbors dies, because of underpopulation.");
                     System.out.println("Each cell with four or more neighbors dies, as if by overpopulation.");
                     System.out.println("Each cell with two or three neighbors survives.");
-                    System.out.println("Each cell with three neighbors becomes populated.");
+                    System.out.println("Each dead cell with three neighbors becomes populated.");
                 }
                 else if (option==2)
                 {
@@ -64,6 +63,7 @@ public class gabriellasGame8
                     System.out.println("Please enter 0, 1, or 2.");
                 }
             }
+            startGame();
         }
     public void startGame()
         {
@@ -97,11 +97,12 @@ public class gabriellasGame8
         
     public void allRules()
         {
-            for (int x=0;x<gridSize-1;x++)//this checks every colomn
+            for (int x=0;x<gridSize;x++)//this checks every colomn
             {
-                for (int y=0;y<gridSize-1;y++)//this checks every row
+                for (int y=0;y<gridSize;y++)//this checks every row
                 {
                     int count = 0;
+                    System.out.println(x+", "+y);
                     //the following if statements checks each cell. I have made it so it checks every corner and side before it checks everything in the middle because if I didn't make it check the sides and corners it would go out of bounds.
                     if(x == 0 && y == 0)//this checks the top left corner cells
                     {
@@ -123,28 +124,28 @@ public class gabriellasGame8
                         if(board[x][y-1] == 0)count++;
                         if(board[x+1][y-1] == 0)count++;
                         if(board[x+1][y] == 0)count++;
-                    }   else if(x == 0)//this checks the top row cells (x axis)
+                    }   else if(y == 0)//this checks the top row cells (x axis)
                     {
                         if(board[x-1][y] == 0)count++;
                         if(board[x+1][y] == 0)count++;
                         if(board[x+1][y+1] == 0)count++;
                         if(board[x][y+1] == 0)count++;
                         if(board[x+1][y+1] == 0)count++;
-                    }   else if(x == 21)//this checks the bottom row cells (x axis)
+                    }   else if(y == 21)//this checks the bottom row cells (x axis)
                     {
                         if(board[x-1][y-1] == 0)count++;
                         if(board[x-1][y] == 0)count++;
                         if(board[x][y-1] == 0)count++;
                         if(board[x+1][y-1] == 0)count++;
                         if(board[x+1][y] == 0)count++;
-                    }   else if(y == 0)//this checks the left side row cells (y axis)
+                    }   else if(x == 0)//this checks the left side row cells (y axis)
                     {
                         if(board[x][y-1] == 0)count++;
                         if(board[x][y+1] == 0)count++;
                         if(board[x+1][y] == 0)count++;
                         if(board[x+1][y+1] == 0)count++;
                         if(board[x+1][y-1] == 0)count++;
-                    }   else if(y == 21)//this checks the right side row cells (y axis)
+                    }   else if(x == 21)//this checks the right side row cells (y axis)
                     {
                         if(board[x-1][y] == 0)count++;
                         if(board[x-1][y-1] == 0)count++;
@@ -162,17 +163,44 @@ public class gabriellasGame8
                         if(board[x+1][y] == 0)count++;
                         if(board[x+1][y+1] == 0)count++;
                     }
-                    switch(count)//this applies the rules of the game
-                    {
-                        case 0: 
+                    if (board[x][y] == 1) //if the cell is alive it will apply the rules
+                    {  switch(count)
+                        {
+                        case 0: //if there are no neighbours, it dies
                             board[x][y] = 0;
                             break;
-                        case 2:
+                        case 1: //if there is one neighbour it dies
+                            board[x][y] = 0;
+                            break;
+                        case 2: //if there are 2 neighbours it becomes alive
                             board[x][y] = 1;
                             break;
-                        case 3:
+                        case 3: //if there are 3 neighbours it becomes alive
                             board[x][y] = 1;
                             break;
+                        default: //if it has more than 4 neighbours it dies
+                            board[x][y] = 0;
+                            break;
+                        }
+                    }  else if (board[x][y] == 0)// if the cell is dead it will apply the rule "Each dead cell with three neighbors becomes populated."
+                    {  switch(count)
+                        {
+                        case 0: //if there are no neighbours, it dies
+                            board[x][y] = 0;
+                            break;
+                        case 1: //if there is one neighbour it dies
+                            board[x][y] = 0;
+                            break;
+                        case 2: //if there are 2 neighbours it dies
+                            board[x][y] = 0;
+                            break;
+                        case 3: //if there are 3 neighbours it becomes alive
+                            board[x][y] = 1;
+                            break;
+                        default: //if it has more than 4 neighbours it dies
+                            board[x][y] = 0;
+                            break;
+                        }
                     }
                 }
             }
@@ -209,9 +237,9 @@ public class gabriellasGame8
                     if (x<10){ System.out.print(" ");}
                     for (int y=0;y<gridSize;y++)
                     {
-                        if (board[y][x]==0)
-                        System.out.print("□ ");//This is printing out the cell on the grid. It represents an empty/dead cell.
-                        else System.out.print("■ ");//this is printing out a cell on the grid if it was occupied/alive
+                        if (board[y][x]==1)
+                        System.out.print("■ ");//this is printing out a cell on the grid if it was occupied/alive
+                        else System.out.print("□ ");//This is printing out the cell on the grid. It represents an empty/dead cell.
                         System.out.print(" ");
                     }
                     System.out.println();// This makes the code print out on the next line and not on the same line
