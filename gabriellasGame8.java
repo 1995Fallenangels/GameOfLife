@@ -2,7 +2,7 @@
  * Write a description of class gabriellasgame7 here.
  *
  * @author Gabriella Bitju
- * @version 30/06/2023
+ * @version 17/07/2023
  * This game is Gabriella's Game of Life (based on the game Conway's Game of Life)
  * This game is played on a 2D grid, where every square is a cell. It can either be dead or alive, depending on the cells surrounding it. The goal of the game is to make pa
  */
@@ -47,6 +47,7 @@ public class gabriellasGame8
                 option= kb.nextInt();
                 if (option==1)
                 {
+                    System.out.println("Here are the game rules:");
                     System.out.println("Each cell with one or no neighbors dies, because of underpopulation.");
                     System.out.println("Each cell with four or more neighbors dies, as if by overpopulation.");
                     System.out.println("Each cell with two or three neighbors survives.");
@@ -97,71 +98,111 @@ public class gabriellasGame8
         
     public void allRules()
         {
-            for (int x=0;x<gridSize;x++)//this checks every colomn
+            for (int x=0;x<21;x++)//this checks every colomn
             {
-                for (int y=0;y<gridSize;y++)//this checks every row
+                for (int y=0;y<21;y++)//this checks every row
                 {
                     int count = 0;
-                    System.out.println(x+", "+y);
+                    //System.out.println(x+", "+y);
                     //the following if statements checks each cell. I have made it so it checks every corner and side before it checks everything in the middle because if I didn't make it check the sides and corners it would go out of bounds.
                     if(x == 0 && y == 0)//this checks the top left corner cells
                     {
-                        if(board[x+1][y] == 0)count++;
-                        if(board[x+1][y+1] == 0)count++;
-                        if(board[x][y+1] == 0)count++;
-                    }   else if(x == 21 && y == 0)//this checks the top right corner cells
+                        if(board[x+1][y] == 1)
+                            count++;
+                        if(board[x+1][y+1] == 1)
+                            count++;
+                        if(board[x][y+1] == 1)
+                            count++;
+                    }   else if(x == 20 && y == 0)//this checks the top right corner cells
                     {
-                        if(board[x-1][y] == 0)count++;
-                        if(board[x-1][y+1] == 0)count++;
-                        if(board[x][y+1] == 0)count++;
-                    }   else if(x == 0 && y == 21)//this checks the bottom left corner cells
+                        if(board[x-1][y] == 1)
+                            count++;
+                        if(board[x-1][y+1] == 1)
+                            count++;
+                        if(board[x][y+1] == 1)
+                            count++;
+                    }   else if(x == 0 && y == 20)//this checks the bottom left corner cells
                     {
-                        if(board[x][y-1] == 0)count++;
-                        if(board[x+1][y-1] == 0)count++;
-                        if(board[x+1][y] == 0)count++;
-                    }   else if(x == 21 && y == 21)//this checks the bottom right corner cells
+                        if(board[x][y-1] == 1)
+                            count++;
+                        if(board[x+1][y-1] == 1)
+                            count++;
+                        if(board[x+1][y] == 1)
+                            count++;
+                    }   else if(x == 20 && y == 20)//this checks the bottom right corner cells
                     {
-                        if(board[x][y-1] == 0)count++;
-                        if(board[x+1][y-1] == 0)count++;
-                        if(board[x+1][y] == 0)count++;
+                        if(board[x][y-1] == 1)
+                            count++;
+                        if(board[x-1][y-1] == 1)
+                            count++;
+                        if(board[x-1][y] == 1)
+                            count++;
                     }   else if(y == 0)//this checks the top row cells (x axis)
                     {
-                        if(board[x-1][y] == 0)count++;
-                        if(board[x+1][y] == 0)count++;
-                        if(board[x+1][y+1] == 0)count++;
-                        if(board[x][y+1] == 0)count++;
-                        if(board[x+1][y+1] == 0)count++;
-                    }   else if(y == 21)//this checks the bottom row cells (x axis)
+                        if(board[x-1][y] == 1)
+                            count++;
+                        if(board[x+1][y] == 1)
+                            count++;
+                        if(board[x+1][y+1] == 1)
+                            count++;
+                        if(board[x][y+1] == 1)
+                            count++;
+                        if(board[x+1][y+1] == 1)
+                            count++;
+                    }   else if(y == 20)//this checks the bottom row cells (x axis)
                     {
-                        if(board[x-1][y-1] == 0)count++;
-                        if(board[x-1][y] == 0)count++;
-                        if(board[x][y-1] == 0)count++;
-                        if(board[x+1][y-1] == 0)count++;
-                        if(board[x+1][y] == 0)count++;
+                        if(board[x-1][y-1] == 1)
+                            count++;
+                        if(board[x-1][y] == 1)
+                            count++;
+                        if(board[x][y-1] == 1)
+                            count++;
+                        if(board[x+1][y-1] == 1)
+                            count++;
+                        if(board[x+1][y] == 1)
+                            count++;
                     }   else if(x == 0)//this checks the left side row cells (y axis)
                     {
-                        if(board[x][y-1] == 0)count++;
-                        if(board[x][y+1] == 0)count++;
-                        if(board[x+1][y] == 0)count++;
-                        if(board[x+1][y+1] == 0)count++;
-                        if(board[x+1][y-1] == 0)count++;
-                    }   else if(x == 21)//this checks the right side row cells (y axis)
+                        if(board[x][y-1] == 1)
+                            count++;
+                        if(board[x][y+1] == 1)
+                            count++;
+                        if(board[x+1][y] == 1)
+                            count++;
+                        if(board[x+1][y+1] == 1)
+                            count++;
+                        if(board[x+1][y-1] == 1)
+                            count++;
+                    }   else if(x == 20)//this checks the right side row cells (y axis)
                     {
-                        if(board[x-1][y] == 0)count++;
-                        if(board[x-1][y-1] == 0)count++;
-                        if(board[x][y-1] == 0)count++;
-                        if(board[x-1][y+1] == 0)count++;
-                        if(board[x][y+1] == 0)count++;
+                        if(board[x-1][y] == 1)
+                            count++;
+                        if(board[x-1][y-1] == 1)
+                            count++;
+                        if(board[x][y-1] == 1)
+                            count++;
+                        if(board[x-1][y+1] == 1)
+                            count++;
+                        if(board[x][y+1] == 1)
+                            count++;
                     } else// this checks every cell in the middle
                     {
-                        if(board[x-1][y] == 0)count++;
-                        if(board[x-1][y-1] == 0)count++;
-                        if(board[x][y-1] == 0)count++;
-                        if(board[x-1][y+1] == 0)count++;
-                        if(board[x][y+1] == 0)count++;
-                        if(board[x+1][y-1] == 0)count++;
-                        if(board[x+1][y] == 0)count++;
-                        if(board[x+1][y+1] == 0)count++;
+                        if(board[x-1][y] == 1)
+                            count++;
+                        if(board[x-1][y-1] == 1)
+                            count++;
+                        if(board[x][y-1] == 1)
+                            count++;
+                        if(board[x-1][y+1] == 1)
+                            count++;
+                        if(board[x][y+1] == 1)
+                            count++;
+                        if(board[x+1][y-1] == 1)
+                            count++;
+                        if(board[x+1][y] == 1)
+                            count++;
+                        if(board[x+1][y+1] == 1)
+                            count++;
                     }
                     if (board[x][y] == 1) //if the cell is alive it will apply the rules
                     {  switch(count)
@@ -207,15 +248,15 @@ public class gabriellasGame8
             board=newBoard;
         }
     
-        public static void clearScreen()
+        /**public static void clearScreen()
         {
             System.out.print("\u000C");
             System.out.flush();
-        }// This is a method that clears the screen
+        }// This is a method that clears the screen**/
     
         public void printGrid()// This code below is responsible for printing out the grid and the formatting of the grid.
         {
-            clearScreen();//this clears the screen before printing out the new grid, this way the grid will stay in the same position ,making it clear of what is changing on the grid.
+            //clearScreen();//this clears the screen before printing out the new grid, this way the grid will stay in the same position ,making it clear of what is changing on the grid.
             System.out.print("   ");//This creates a little gap before I print out the x co-ordinates above the grid so the x is in line with the y co-ordinates.
             for (int i=0;i<gridSize;i++)
                 {  
