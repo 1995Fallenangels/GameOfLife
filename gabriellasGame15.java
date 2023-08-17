@@ -2,14 +2,14 @@
  * Write a description of class gabriellasGame15 here.
  *
  * @author Gabriella Bitju
- * @date 28/07/2023
- * @version 15
+ * @date 18/08/2023
+ * @version 16
  * My code is a game based on the game Conway's Game of Life.
  * The name of this game is Gabriella's Game of Life.
  * This game is a zero-player game, which means it evolves based on its initial state and doesn't need human input.
  * It is played on a 2D grid, where every square is a cell.
- * The cell can either be dead or alive, depending on the cells surrounding it and the rules of the game.
- * Depending on its initial state, the cells will form patterns on the grid.
+ * The cell can either be dead or alive, depending on the cells surrounding it and the rules of the game (the cells interactions with other cells).
+ * Depending on its initial state and the interactions, the cells will form patterns on the grid.
  * The game will ask you to manually choose which cells you want to be alive. Then ask how many generations you want it to run.
  * Then you will watch the cells evolve after every generation.
  * The rules of the game are:
@@ -19,7 +19,11 @@
  * if it has 2 or 3 neighbors it will stay alive
  * - For every cell that is dead/empty:
  * if it has 3 neighbors it becomes alive.
- *
+ * the cells will evolve for how many generations the user wants it to run.
+ * the game will then ask the user if they want to add more cells or run more generations or end the game.
+ * if they choose to add more cells then the game will ask the user for the coordinates of the cell they want to be alive.
+ * Then they run the generations and repeat until the user chooses to end the game.
+ * This game doesn't really have an aim, it just creates patterns.
  */
 import java.util.Scanner; //keyboard scanner
 public class gabriellasGame15 {
@@ -41,10 +45,13 @@ public class gabriellasGame15 {
         // initialise instance variables
         for (int x = 0; x < gridSize; x++) //creating my 2D array. This is creating a 21x21 array of integers
         {
-            for (int y = 0; y < gridSize; y++) board[x][y] = false;
+            for (int y = 0; y < gridSize; y++) board[x][y] = false;//this has set my grid cells to dead.
         }
         System.out.println("Welcome to Gabriella's Game of Life (✿◠‿◠)"); //This is the opening to my game
+        System.out.println("Gabriella's Game of Life is based on the game Conway's Game of Life. The game is played on a 2D grid, where every square is a cell. Each cell can either be dead or alive.");
+        System.out.println("You will choose which cell is dead or alive. The cells will go through generations and change based on its interactions between each cell.");
         starterMenu();//This calls out the starter menu method which prints out and operates the starter menu before the user starts the game.
+        startGame(); //this will start the same when the user enters 0. This method will do everything from asking the user coordinates to running the geneartions.
     }
     //below are methods, I have put components of my game into methods to make it easier for me to call them, to make my code more organized, and to prevent errors.
     public void starterMenu() {
@@ -52,34 +59,32 @@ public class gabriellasGame15 {
         //below prints out the options for the starter menu
         System.out.println("Starter menu:");
         System.out.println("Enter 0 to start game");
-        System.out.println("Enter 1 to see a description of the game");
-        System.out.println("Enter 2 to see how to play");
-        System.out.println("Enter 3 to see the game rules");
-        System.out.println("Enter 4 to see the game credits");
+        System.out.println("Enter 1 to see how to play");
+        System.out.println("Enter 2 to see game credits");
         while (!option.equals("0")) //This is a while loop for my starter menu. While the user input is not 0(to start the game), then the starter menu will keep reappearing after every input.
         {
             option = kb.nextLine();
             if (option.equals("1")) {
-                System.out.println("Gabriella's Game of Life is based on the game Conway's Game of Life. The game is played on a 2D grid, where every square is a cell.");
-                System.out.println("Each cell can either be dead or alive. The cells change every generation based on its initial state and the game rules.");
-            } else if (option.equals("2")) {
                 System.out.println("How to play:");
-                System.out.println("1. Choose which cells you want to be alive by entering the x, y coordinates, repeat until you have finished choosing which cells you want to be alive.");
-                System.out.println("2. Choose how many generations you want the cells to go through");
-                System.out.println("3. Watch as the cells evolve through each generation");
-            } else if (option.equals("3")) {
-                System.out.println("Here are the game rules:");
+                System.out.println("1. Choose which cells you want to be alive or dead by entering the x, y coordinates. Repeat until you have finished choosing which cells you want to be alive.");
+                System.out.println("(to kill an alive cell, enter the coordinate of the alive cell)");
+                System.out.println("2. Choose how many generations you want the cells to go through.");
+                System.out.println("3. Watch as the cells evolve through each generation.");
+                System.out.println("4. Repeat until you want to quit the game.");
+                System.out.println("  ");
+                System.out.println("(The cells become dead or alive depending on it's interactions with other cells. The game rules are the possible interactions.)");
+                System.out.println("The game rules:");
                 System.out.println("Each cell with one or no neighbors dies, because of underpopulation.");
                 System.out.println("Each cell with four or more neighbors dies, as if by overpopulation.");
                 System.out.println("Each cell with two or three neighbors survives.");
-            } else if (option.equals("4")) {
-                System.out.println("Each dead cell with three neighbors becomes populated.");System.out.println("Thank you Conway for originally creating this game");
+                System.out.println("Each dead cell with three neighbors becomes populated.");
+            } else if (option.equals("2")) {
+                System.out.println("Thank you Conway for originally creating this game");
                 System.out.println("This game was coded by Gabriella Bella Rose");
             } else if (!option.equals("0")) {} {
-                System.out.println("Please enter 0, 1, 2, 3, or 4.");//this will be printed out whenever the user inputs anything other than 0, 1, 2, 3, or 4 so the game won't break.
+                System.out.println("Please enter 0, 1, or 2.");//this will be printed out whenever the user inputs anything other than 0, 1, 2, 3, or 4 so the game won't break.
             } //
         }
-        startGame(); //this will start the same when the user enters 0.
     }
     //This method will start the game
     public void startGame() {
@@ -90,7 +95,7 @@ public class gabriellasGame15 {
             askingUserCoordinates(); //This is the method that asks for user input for coordinates.
             printGrid(); //This prints out a new grid with the user input changing the cells.
         }
-        for (int generations = askForInt("How many generations do you want to run? (1-1000)", 0, 1000); generations > 0; generations--) {
+        for (int generations = askForInt("How many generations do you want to run? (1-50)", 0, 50); generations > 0; generations--) {
             applyingGameRules();//This will go through the cells and apply the game rules to change the cells.
             try {
                 Thread.sleep(2000 / 2);
@@ -100,8 +105,7 @@ public class gabriellasGame15 {
             printGrid();//this prints out the new grid after every generation
             System.out.println(generations);//this prints out the number of generations
         }
-        //once the game has gone through the generations, the endGameOption function will be called out. This will ask the user if they wan
-        endGameOption();
+        endGameMenu();//after it has gone through all the generations it will go to the end of game menu. If they choose 3, the game will end.
     }
     //This method asks the user for the coordinates of the cell they want to change.
     public void askingUserCoordinates() {
@@ -112,7 +116,7 @@ public class gabriellasGame15 {
         board[usersXCoordinate][usersYCoordinate] = !board[usersXCoordinate][usersYCoordinate];//user input changes the cell chosen to be alive/on. This means if the users x y coordinate is dead before, now make it alive/not dead.
         // And if the users x y coordinate is alive already, then make it dead. This way the user can undo/kill the cell that they picked before.
         printGrid();
-        System.out.println("To continue adding cells press enter to continue, or enter 's' to stop adding cells");
+        System.out.println("To continue adding cells press 'enter', to stop adding cells enter 's'");
         String input = kb.nextLine();
         input = input.toLowerCase(); //This makes it so if the user inputs a capital 'S', it will turn it to a lowercase S and stop the editing.
         if (input.equals("s")) //this is an if statement that makes the 'stilEditing' loop stop if the user inputs the letter s, the game will proceed to ask how many generations it wants to run.
@@ -154,18 +158,19 @@ public class gabriellasGame15 {
     }
     //This method (applyingGameRules) applies the rules of Conway's Game of Life, it scans the neighbors of each cell and turns the cell on or off based on the previous state and based on the rules.  
     public void applyingGameRules() {
-        for (int j = 0; j < gridSize; j++)
-                {
-                    for (int i = 0; i < gridSize; i++){
-                    newBoard[j][i] = board[j][i];
-                    }
-                }
-        for (int x = 0; x < gridSize; x++) //this checks every column
+        for (int j = 0; j < gridSize; j++)//this checks every column of newBoard
         {
-            for (int y = 0; y < gridSize; y++) //this checks every row
+            for (int i = 0; i < gridSize; i++)//this checks every row of newBoard
             {
-                int numberOfCellsAlive = 0;
-                //the following if statements check each cell. I have made it so it checks every corner and side before it checks everything in the middle.
+                newBoard[j][i] = board[j][i];//this goes through the cells of newBoard and changes it to be the same as the variables of (original) board
+            }
+        }
+        for (int x = 0; x < gridSize; x++) //this checks every column of the board
+        {
+            for (int y = 0; y < gridSize; y++) //this checks every row of the board
+            {
+                int numberOfCellsAlive = 0;//This integer of numberOfCellsAlive is the integer that represents the number of neighbors a cell has.
+                //The following if statements check each cell. I have made it so it checks every corner and side before it checks everything in the middle.
                 //If I didn't make it check the sides and corners it would go out of bounds. If a cell is alive, it will add one to the "numberOfCellsAlive".
                 //It's basically telling us how many neighbors are alive.
                 if (x == 0 && y == 0) //this checks if the 3 top left corner cells are alive
@@ -267,21 +272,24 @@ public class gabriellasGame15 {
                     if (board[x + 1][y + 1])
                         numberOfCellsAlive++;
                 }
-                if (board[x][y]) //if the cell is alive it will apply the rules
+                if (board[x][y]) //if the cell is alive it will apply the rules below
                 {
-                    if (numberOfCellsAlive < 2 || numberOfCellsAlive > 3) {
-                        newBoard[x][y] = false;
+                    if (numberOfCellsAlive < 2 || numberOfCellsAlive > 3)//if there are less than 2 neighbors or more than 3 neighbors the cell will die
+                    {
+                        newBoard[x][y] = false;//kills the cell
                     }
                 } else if (!board[x][y]) // if the cell is dead it will apply the rule "Each dead cell with three neighbors becomes populated."
                 {
-                    if (numberOfCellsAlive == 3) {
-                        newBoard[x][y] = true;
+                    if (numberOfCellsAlive == 3)//if the cell has 3 neighbors then the cell will become alive
+                    {
+                        newBoard[x][y] = true;//makes the cell alive.
                     }
                 }
             }
         }
-        for (int j = 0; j < gridSize; j++){
-            for (int i = 0; i < gridSize; i++)
+        for (int j = 0; j < gridSize; j++)//goes through each column
+        {
+            for (int i = 0; i < gridSize; i++)//goes through each row
             {
                 board[j][i] = newBoard[j][i];
             }
@@ -311,20 +319,20 @@ public class gabriellasGame15 {
         String input = askForString(question);
         int answer;
         try {
-            answer = Integer.parseInt(input);
+            answer = Integer.parseInt(input);//this makes the string into a an integer
         } catch (NumberFormatException nfe) {
-            System.out.println("invalid input! Please enter numbers only");
-            return askForInt(question, min, max);
+            System.out.println("invalid input! Please enter numbers only");//if they enter anything other than a number it will print out this message
+            return askForInt(question, min, max);//then it will ask the question again
         }
         if (min <= answer && answer <= max) {
             return answer;
         } else {
-            System.out.println("number too low or too high, please enter an appropriate number");
+            System.out.println("number too low or too high, please enter an appropriate number");//This message appears when the input number is less or more than the required number.
             return askForInt(question, min, max);
         }
     }
     //This method shows the options that appear when the game has gone through a number of generations. The user can either add more cells to the grid or the user can run more generations or quit the game.
-    public void endGameOption() {
+    public void endGameMenu() {
         String option = "";
         System.out.println("Enter 1 to add more cells, 2 to run more generations, or 3 to quit playing."); //prints out the options
         while (!option.equals("3")) //This is a while loop for my starter menu. While the user input is not 0(to start the game), then the starter menu will keep reappearing.
@@ -340,12 +348,11 @@ public class gabriellasGame15 {
                 //if they choose 3 the following will happen
                 clearScreen(); //clears the screen
                 System.out.println("Thank you for playing Gabriella's Game of Life (✿◠‿◠) "); //this prints out a message when the game ends.
-                //then the game ends :D!
+                System.exit(0);//this ends the game :D!
             } //if the user enters 3 then it will proceed to clearScreen()
             else if (!option.equals("3")) {
-                System.out.println("Please enter 1, 2, or 3.");
+                System.out.println("Please enter 1, 2, or 3.");//this will print out when the user enters something other than 3.
             } //
         }
-        kb.close();//the scanner closes (without this the game will keep asking for user input)
     }
 }
