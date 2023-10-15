@@ -50,21 +50,23 @@ public class gabriellasGame17 {
         System.out.println("Welcome to Gabriella's Game of Life (✿◠‿◠)"); //This is the opening to my game
         System.out.println("Gabriella's Game of Life is based on the game Conway's Game of Life. The game is played on a 2D grid, where every square is a cell. Each cell can either be dead (□) or alive (■).");
         System.out.println("You will choose which cell is dead or alive. The cells will go through generations and change based on its interactions between each cell.");
-        starterMenu();//This calls out the starter menu method which prints out and operates the starter menu before the user starts the game.
+        startingGameMenu();//This calls out the starting game menu method which prints out and operates the starting game menu before the user starts the game.
         startGame(); //this will start the same when the user enters 0. This method will do everything from asking the user coordinates to running the geneartions.
     }
     //below are methods, I have put components of my game into methods to make it easier for me to call them, to make my code more organized, and to prevent errors.
-    public void starterMenu() {
+    public void startingGameMenu() {
         String option = "";
-        //below prints out the options for the starter menu
-        System.out.println("Starter menu:");
+        //below prints out the options for the starting game menu
+        System.out.println("starting game menu:");
         System.out.println("Enter 0 to start game");
         System.out.println("Enter 1 to see how to play");
         System.out.println("Enter 2 to see game credits");
-        while (!option.equals("0")) //This is a while loop for my starter menu. While the user input is not 0(to start the game), then the starter menu will keep reappearing after every input.
+        while (!option.equals("0")) //This is a while loop for my starting game menu. While the user input is not 0(to start the game), then the starting game menu will keep reappearing after every input.
+        //if the user inputs 0 then it will continue to the startGame() instantly.
         {
             option = kb.nextLine();
             if (option.equals("1")) {
+                //if the user inputs 1, then the game will print out how to play + the rules of the game
                 System.out.println("How to play:");
                 System.out.println("1. Choose which cells you want to be alive or dead by entering the x, y coordinates. Repeat until you have finished choosing which cells you want to be alive.");
                 System.out.println("(to kill an alive cell, enter the coordinate of the alive cell)");
@@ -79,10 +81,11 @@ public class gabriellasGame17 {
                 System.out.println("Each cell with two or three neighbors survives.");
                 System.out.println("Each dead cell with three neighbors becomes populated.");
             } else if (option.equals("2")) {
+                //if the user inputs 2, the game credits will appear
                 System.out.println("Thank you Conway for originally creating this game");
                 System.out.println("This game was coded by Gabriella Bella Rose");
-            } else if (!option.equals("0")) {} {
-                System.out.println("Please enter 0, 1, or 2.");//this will be printed out whenever the user inputs anything other than 0, 1, 2, 3, or 4 so the game won't break.
+            } else if (!option.equals("0")) {}{
+                System.out.println("Please enter 0, 1, or 2.");//this will be printed out whenever the user inputs anything other than 0, 1, 2 so the game won't break.
             } //
         }
     }
@@ -103,7 +106,7 @@ public class gabriellasGame17 {
                 System.out.println(ie);
             }// this craetes a time delay between each time the generations print out.
             printGrid();//this prints out the new grid after every generation
-            System.out.println(generations);//this prints out the number of generations
+            System.out.println(generations);// this is like a count down to how many generations are left to go through. 
         }
         endGameMenu();//after it has gone through all the generations it will go to the end of game menu. If they choose 3, the game will end.
     }
@@ -129,9 +132,9 @@ public class gabriellasGame17 {
         } else if (input.equals("s")) //this is an if statement that makes the 'stilEditing' loop stop if the user inputs the letter s, the game will proceed to ask how many generations it wants to run.
         {
             stillEditing = false;
-        } else {
-            System.out.println("Invalid input!");
-            stopAddingCells();
+        } else { 
+            System.out.println("Invalid input!");//if the user inputs anything other than 'c' or 's' then this message will print out
+            stopAddingCells();//then the game will ask the question above again.
         }
     }
     //This method prints out the grid.
@@ -155,16 +158,16 @@ public class gabriellasGame17 {
             System.out.print(" "); // this prints out a space after the y coordinates.
             if (y < 10) {
                 System.out.print(" ");
-            }
+            }//this is just for formatting, if the number is less than 10 there will be an extra space added between the y coordinates on the side and the cells for the cells less than 10.
             for (int x = 0; x < gridSize; x++) {
                 if (board[x][y])
                     System.out.print("■ "); //this is printing out a cell on the grid if it was occupied/alive
                 else System.out.print("□ "); //This is printing out the cell on the grid. It represents an empty/dead cell.
-                System.out.print(" ");
+                System.out.print(" ");//for formatting
             }
             System.out.println(); // This makes the code print out on the next line and not on the same line
         }
-        System.out.println("");
+        System.out.println("");//for formatting
     }
     //This method (applyingGameRules) applies the rules of Conway's Game of Life, it scans the neighbors of each cell and turns the cell on or off based on the previous state and based on the rules.  
     public void applyingGameRules() {
@@ -286,7 +289,7 @@ public class gabriellasGame17 {
                 {
                     if (numberOfCellsAlive < 2 || numberOfCellsAlive > 3)//if there are less than 2 neighbors or more than 3 neighbors the cell will die
                     {
-                        newBoard[x][y] = false;//kills the cell
+                        newBoard[x][y] = false;//kills the cell 
                     }
                 } else if (!board[x][y]) // if the cell is dead it will apply the rule "Each dead cell with three neighbors becomes populated."
                 {
@@ -297,11 +300,11 @@ public class gabriellasGame17 {
                 }
             }
         }
-        for (int j = 0; j < gridSize; j++)//goes through each column
+        for (int j = 0; j < gridSize; j++)//goes through each column of 'newBoard'
         {
-            for (int i = 0; i < gridSize; i++)//goes through each row
+            for (int i = 0; i < gridSize; i++)//goes through each row of 'newBoard'
             {
-                board[j][i] = newBoard[j][i];
+                board[j][i] = newBoard[j][i];//this sets the variables of 'board' to have the same as the variables of 'newBoard'. 'newBoard' is the board that the rules are applied to- the variables of newBoard were changed based on the game rules.
             }
         }
     }
@@ -309,7 +312,7 @@ public class gabriellasGame17 {
     public void addingMoreCells() {
         while (continuingGame) {
             stillEditing = true;
-            //I have set stillEditing to true before running the startGame method because if I didn't the game would skip asking the x y coordinates to ask how many generations would like to be run.
+            //I have set stillEditing to true before the game starts again because if I didn't the game would skip asking the x y coordinates to ask how many generations would like to be run.
             //This is because in my askingUserCoordinates method when the user enters "s" then stillEditing is set to false so it wouldn't ask the user to add more cells.
             startGame(); //this starts the game again but with the same grid. It will ask the user for more cell coordinates.
         }
@@ -334,8 +337,8 @@ public class gabriellasGame17 {
             System.out.println("invalid input! Please enter numbers only");//if they enter anything other than a number it will print out this message
             return askForInt(question, min, max);//then it will ask the question again
         }
-        if (min <= answer && answer <= max) {
-            return answer;
+        if (min <= answer && answer < max) {
+            return answer;//if the answer is less than or equal to the minimum or less than or equal to the maximum it will keep it as an answer.
         } else {
             System.out.println("number too low or too high, please enter an appropriate number");//This message appears when the input number is less or more than the required number.
             return askForInt(question, min, max);
@@ -345,10 +348,10 @@ public class gabriellasGame17 {
     public void endGameMenu() {
         String option = "";
         System.out.println("Enter 1 to add more cells, 2 to run more generations, or 3 to quit playing."); //prints out the options
-        while (!option.equals("3")) //This is a while loop for my starter menu. While the user input is not 0(to start the game), then the starter menu will keep reappearing.
+        while (!option.equals("3")) //This is a while loop for my ending game menu. While the user input is not 3(to end the game), then the ending game menu will keep reappearing.
         {
             option = kb.nextLine();
-            if (option.equals("1")) //if the user enters 1 then it will call the addingMoreCells method
+            if (option.equals("1")) //if the user enters 1 then it will call the addingMoreCells method so the user can add more cells.
             {
                 addingMoreCells();
             } else if (option.equals("2")) //if the user enters 2 then it will call the startGame method which asks them how many generations they want to run.
@@ -362,7 +365,7 @@ public class gabriellasGame17 {
             } //if the user enters 3 then it will proceed to clearScreen()
             else if (!option.equals("3")) {
                 System.out.println("Please enter 1, 2, or 3.");//this will print out when the user enters something other than 3.
-            } //
+            } 
         }
     }
 }
